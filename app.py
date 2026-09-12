@@ -26,6 +26,28 @@ def calculate_metrics(
     credit_expenses_paid_col,
     date_col
 ):
+    # Convert financial columns to numeric values
+    numeric_cols = [
+        total_sales_col,
+        total_expenses_col,
+        cash_sale_col,
+        credit_expenses_paid_col,
+        'Total Cash Expenses',
+        'Total Credit Expenses'
+    ]
+
+    for col in numeric_cols:
+        data[col] = (
+            data[col]
+            .astype(str)
+            .str.replace('$', '', regex=False)
+            .str.replace(',', '', regex=False)
+            .str.strip()
+        )
+        data[col] = pd.to_numeric(data[col], errors='coerce')
+
+    # Convert date column
+    data[date_col] = pd.to_datetime(data[date_col], errors='coerce')
     # Calculate basic metrics
     data['cash_sale_percent'] = data[cash_sale_col] / data[total_sales_col]
     data['expense_ratio'] = data[total_expenses_col] / data[total_sales_col]
