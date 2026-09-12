@@ -129,16 +129,41 @@ if data is not None:
     st.write("Available Columns:")
     st.write(data.columns)
 
-    # Column selection
-    total_sales_col = st.selectbox("Select Total Sales Column", options=data.columns)
-    total_expenses_col = st.selectbox("Select Total Expenses Column", options=data.columns)
-    cash_sale_col = st.selectbox("Select Cash Sale Column", options=data.columns)
-    credit_expenses_paid_col = st.selectbox(
-        "Select Cash Paid for Credit Expenses Column",
-        options=data.columns
-    )
-    date_col = st.selectbox("Select Date Column (YYYY-MM format)", options=data.columns)
+    # Column selection with correct default values
+    columns = list(data.columns)
 
+    def default_index(column_name):
+        return columns.index(column_name) if column_name in columns else 0
+
+    total_sales_col = st.selectbox(
+        "Select Total Sales column",
+        options=columns,
+        index=default_index("Total Sales")
+    )
+
+    total_expenses_col = st.selectbox(
+        "Select Total Expenses column",
+        options=columns,
+        index=default_index("Total Expenses")
+    )
+
+    cash_sale_col = st.selectbox(
+        "Select Cash Sales column",
+        options=columns,
+        index=default_index("Total Cash Sales")
+    )
+
+    credit_expenses_paid_col = st.selectbox(
+        "Select Credit Expenses Paid column",
+        options=columns,
+        index=default_index("Credit Expenses Paid")
+    )
+
+    date_col = st.selectbox(
+        "Select Date column (YYYY-MM)",
+        options=columns,
+        index=default_index("Month")
+    )
     # Validate date column
     try:
         data[date_col] = pd.to_datetime(data[date_col], format='%Y-%m', errors='coerce')
