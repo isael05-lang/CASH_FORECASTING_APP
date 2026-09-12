@@ -156,7 +156,7 @@ if data is not None:
     credit_expenses_paid_col = st.selectbox(
         "Select Credit Expenses Paid column",
         options=columns,
-        index=default_index("Credit Expenses Paid")
+        index=default_index("Cash Paid for Credit Expenses")
     )
 
     date_col = st.selectbox(
