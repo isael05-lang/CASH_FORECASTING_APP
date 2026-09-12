@@ -77,7 +77,7 @@ def forecast_sales(data, total_sales_col, date_col):
     )
     model = Prophet()
     model.fit(df)
-    future = model.make_future_dataframe(periods=12, freq='M')  # 12 months for 2025
+    future = model.make_future_dataframe(periods=12, freq='MS')  # 12 months for 2025
     forecast = model.predict(future)
     return forecast[['ds', 'yhat']].rename(columns={'yhat': 'forecast_sales'})
 
